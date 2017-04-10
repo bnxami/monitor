@@ -98,13 +98,7 @@
             #speed_in=$(/sbin/ifconfig | head -8 | grep -e 'Bytes RX:' -e 'RX packets' | cut -d "(" -f2 | cut -d ")" -f1)
             #speed_out=$(/sbin/ifconfig | head -8 | grep -e 'Bytes RX:' -e 'RX packets' | cut -d "(" -f3 | cut -d ")" -f1)
 
-          echo "
-                tarjetas[tarjeta$i]=$tarjeta_red&
-                tarjetas[ip_$tarjeta_red]=$ip_tarjeta&
-                tarjetas[mask_$tarjeta_red]=$mask&
-                tarjetas[gateway_$tarjeta_red]=$gateway&
-                tarjetas[paquetes_recibidos_$tarjeta_red]=$paquetes_recibidos&
-                tarjetas[paquetes_enviados_$tarjeta_red]=$paquetes_enviados&" >> /tmp/input;
+          echo "tarjetas[tarjeta$i]=$tarjeta_red&tarjetas[ip_$tarjeta_red]=$ip_tarjeta&tarjetas[mask_$tarjeta_red]=$mask&tarjetas[gateway_$tarjeta_red]=$gateway&tarjetas[paquetes_recibidos_$tarjeta_red]=$paquetes_recibidos&tarjetas[paquetes_enviados_$tarjeta_red]=$paquetes_enviados&" >> /tmp/input;
           done
 
 #-----Discos
@@ -133,9 +127,7 @@
 
 
                     #echo "discos[$nom_disco][tamano]=$tamano_disco&discos[$nom_disco][particiones][$nom_particion][tamano]=$tamano_particion&" >> /tmp/input;
-                     echo "discos[disco$i]=$nom_disco&
-                           discos[$nom_disco"_tamano"]=$tamano_disco&
-                           discos[$nom_disco"_"$nom_particion]=$tamano_particion&" >> /tmp/input;
+                     echo "discos[disco$i]=$nom_disco&discos[$nom_disco"_tamano"]=$tamano_disco&discos[$nom_disco"_"$nom_particion]=$tamano_particion&" >> /tmp/input;
               done
 
       done

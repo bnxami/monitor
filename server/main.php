@@ -6,6 +6,13 @@ if(isset($_SESSION['usuario'])){
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
+	
+	/*
+	Crides a dos jquery distints, sols necessites un dels dos, segurament el 3.1.1
+	Observa el javscript que plena el div "json"
+	*/
+	
+	
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +24,7 @@ ini_set("display_errors", 1);
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
   <style>
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -72,6 +79,52 @@ $token = $_GET['e'];
 ?>
  <script language="JavaScript" type="text/javascript">
    
+	 
+	 //javascript per a json:
+	 
+	 $(function(){  //funcio inici del document en jquery
+		 
+		 $.getJSON("datos.php",{e:'<?php echo $token?>'},function(data){  // demane per ajax un json
+		 console.log(data['datos']); // mostre en la consola part del seu contingut
+			   var items = [];
+			   $.each( data['datos'], function( key, val ) {  // per a cada element de "datos"
+				   items.push( "<li id='" + key + "'>"+ key+ ": " + val + "</li>" ); // afegir a l'array items un li amb els datos
+			   });
+			 $( "<ul/>", {
+				 "class": "my-new-list",
+				 html: items.join( "" ) // afegir a un ul els li creats abans i tot dins del div id=json
+			 }).appendTo( "#json" );
+		 });
+		 
+		 /*Array tarjetas*/
+		 $.getJSON("datos.php",{e:'<?php echo $token?>'},function(data){  // demane per ajax un json
+		 console.log(data['tarjetas']); // mostre en la consola part del seu contingut
+			   var items1 = [];
+			   $.each( data['tarjetas'], function( key, val ) {  // per a cada element de "datos"
+				   items1.push( "<li id='" + key + "'>"+ key+ ": " + val + "</li>" ); // afegir a l'array items un li amb els datos
+			   });
+			 $( "<ul/>", {
+				 "class": "my-new-list",
+				 html: items1.join( "" ) // afegir a un ul els li creats abans i tot dins del div id=json
+			 }).appendTo( "#tarjetas" );
+		 });
+		 
+			/*Array discos*/
+		$.getJSON("datos.php",{e:'<?php echo $token?>'},function(data){  // demane per ajax un json
+		 console.log(data['discos']); // mostre en la consola part del seu contingut
+			   var items2 = [];
+			   $.each( data['discos'], function( key, val ) {  // per a cada element de "datos"
+				   items2.push( "<li id='" + key + "'>"+ key+ ": " + val + "</li>" ); // afegir a l'array items un li amb els datos
+			   });
+			 $( "<ul/>", {
+				 "class": "my-new-list",
+				 html: items2.join( "" ) // afegir a un ul els li creats abans i tot dins del div id=json
+			 }).appendTo( "#discos" );
+		 });
+	 });
+	 
+	 
+	 
      function show5(){
          if (!document.layers&&!document.all&&!document.getElementById)
          return
@@ -222,7 +275,7 @@ $token = $_GET['e'];
         </div>
         
 		  <div class="col-sm-4">
-          	<div class="well" >
+          	<div class="well"  id="discos">
 			   <h2>Discos</h2>
 			   <div><span style="float:right">Total:500GB</span>/dev/sda1</div>
       				<div class="progress">
@@ -248,7 +301,7 @@ $token = $_GET['e'];
 		
 		</div>
         <div class="col-sm-4">
-          <div class="well" id="discos">
+          <div class="well" id="tarjetas">
 			 
           </div>
         </div>
@@ -340,6 +393,11 @@ Highcharts.chart('container', {
     }]
 });
 		</script>
+	
+	
+	<div id="json"></div>
+	
+	
 </body>
 </html>
 <?php
